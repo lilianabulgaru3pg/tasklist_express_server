@@ -3,16 +3,18 @@ const bodyParser = require('body-parser');
 const uuid = require('uuid/v4')
 const session = require('express-session')
 const FileStore = require('session-file-store')(session);
-const bcrypt = require('bcrypt-nodejs');
 const multer = require('multer');
 var upload = multer();
 
+var db = require('./utils/database');
 var userRouter = require('./routes/userRouter.js');
 var passport = require('./utils/passport.js');
 
+const PORT = 8080;
 const app = express();
+
 app.use(bodyParser.urlencoded({
-    extended: false
+    extended: true
 }));
 app.use(bodyParser.json());
 
@@ -22,7 +24,7 @@ app.use(session({
         return uuid() // use UUIDs for session IDs
     },
     store: new FileStore(),
-    secret: 'keyboard cat',
+    secret: 'wur8734r837e8wuidks932qwias',
     resave: false,
     saveUninitialized: true
 }))
@@ -33,9 +35,18 @@ app.use(express.static('public'));
 app.use(express.static('../TodoListApp/dist/'));
 
 app.post('/user-tasks', upload.none(), userRouter);
-app.get('/authrequired/user-tasks', userRouter);
+app.get('/user-tasks', isLoggedIn, userRouter);
 
-app.listen(8080, () => {
+function isLoggedIn(req, res, next) {
+    console.log('isLoggedIn', req.isAuthenticated());
+    if (req.isAuthenticated()) {
+        return res.redirect('/user-tasks');
+    }
+    res.redirect('/');
+}
+
+
+app.listen(PORT, () => {
     console.log('Listening on localhost:8080')
 });
 
