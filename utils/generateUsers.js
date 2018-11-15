@@ -1,4 +1,6 @@
 var User = require('../models/user');
+var Task = require('../models/task');
+var mongoose = require('mongoose');
 
 const users = [{
         username: 'test',
@@ -10,18 +12,46 @@ const users = [{
     }
 ];
 
+async function save(user, task) {
+    try {
+        const savedUser = await user.save().then(user => user);
+        task.user = savedUser._id;
+        const savedTask = await task.save().then(task => task);
+    } catch (err) {
+        console.log('save failed', err);
+    }
+}
+
 var newUser = new User();
+newUser._id = new mongoose.Types.ObjectId();
 newUser.username = users[0].username;
 newUser.password = newUser.generateHash(users[0].password);
-newUser.save(function (err) {
-    console.log('first user saved to db')
-    if (err) console.log(err);
+
+var task1 = new Task({
+    _id: new mongoose.Types.ObjectId(),
+    title: 'Today',
+    items: []
+});
+
+User.findOne({
+    username: users[0].username
+}, (err, user) => {
+    if (!user) save(newUser, task1);
 });
 
 var secondUser = new User();
+secondUser._id = new mongoose.Types.ObjectId();
 secondUser.username = users[1].username;
 secondUser.password = secondUser.generateHash(users[1].password);
-secondUser.save(function (err) {
-    console.log('second user saved to db')
-    if (err) console.log(err);
+
+var task2 = new Task({
+    _id: new mongoose.Types.ObjectId(),
+    title: 'Today',
+    items: []
+});
+
+User.findOne({
+    username: users[1].username
+}, (err, user) => {
+    if (!user) save(secondUser, task2);
 });
