@@ -32,7 +32,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.static('public'));
-app.use(express.static('../TodoListApp/dist/'));
+// app.use(express.static('../TodoListApp/dist/'));
+app.use(express.static('../TodoListApp/src/'));
+app.use(express.static('../TodoListApp/src/main.css'));
+// app.use(express.static('../TodoListApp/src/index.js'));
 
 app.post('/user-tasks', upload.none(), userRouter);
 app.get('/user-tasks', isLoggedIn, userRouter);
