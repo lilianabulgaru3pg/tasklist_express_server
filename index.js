@@ -6,7 +6,7 @@ const FileStore = require('session-file-store')(session);
 const multer = require('multer');
 var upload = multer();
 
-require('./utils/database');
+var db = require('./utils/database');
 var userRouter = require('./routes/userRouter.js');
 var passport = require('./utils/passport.js');
 
@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use(session({
-    genid: () => {
+    genid: (req) => {
         console.log('Inside session middleware genid function');
         return uuid() // use UUIDs for session IDs
     },
@@ -38,8 +38,7 @@ app.use(express.static('../TodoListApp/src/main.css'));
 // app.use(express.static('../TodoListApp/src/index.js'));
 
 app.post('/user-tasks', upload.none(), userRouter);
-// app.get('/user-tasks', isLoggedIn, userRouter);
-app.get('/user-tasks', userRouter);
+app.get('/user-tasks', isLoggedIn, userRouter);
 
 function isLoggedIn(req, res, next) {
     console.log('isLoggedIn', req.isAuthenticated());
@@ -48,6 +47,7 @@ function isLoggedIn(req, res, next) {
     }
     res.redirect('/');
 }
+
 
 app.listen(PORT, () => {
     console.log('Listening on localhost:8080')
