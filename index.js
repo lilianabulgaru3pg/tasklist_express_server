@@ -10,7 +10,7 @@ var db = require('./utils/database');
 var userRouter = require('./routes/userRouter.js');
 var passport = require('./utils/passport.js');
 
-const PORT = 8080;
+const PORT = 3000;
 const app = express();
 
 app.use(bodyParser.urlencoded({
@@ -32,9 +32,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.static('public'));
-// app.use(express.static('../TodoListApp/dist/'));
-app.use(express.static('../TodoListApp/src/'));
-app.use(express.static('../TodoListApp/src/main.css'));
+app.use(express.static('../TodoListApp/dist/'));
+// app.use(express.static('../TodoListApp/src/'));
+// app.use(express.static('../TodoListApp/src/main.css'));
 // app.use(express.static('../TodoListApp/src/index.js'));
 
 app.post('/user-tasks', upload.none(), userRouter);
@@ -50,7 +50,7 @@ function isLoggedIn(req, res, next) {
 
 
 app.listen(PORT, () => {
-    console.log('Listening on localhost:8080')
+    console.log('Listening on localhost:3000')
 });
 
 module.exports = app;
