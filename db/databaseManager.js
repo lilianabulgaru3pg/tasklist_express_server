@@ -7,7 +7,7 @@ async function fetchTasks(userID) {
         }, (err, tasks) => tasks);
 
         var newUsersTask = userTasks.map((val) => ({
-            items: val.items,
+            items: val._id,
             title: val.title
         }));
 

@@ -9,13 +9,13 @@ exports.user_tasks = ((req, res, next) => {
     passport.authenticate('local-login', (err, user, info) => {
         console.log('passport', err, user, info);
         if (info)
-            return res.status('401');
+            return res.status(401);
 
         if (err)
             return next(err);
 
         if (!user)
-            return res.status('401');
+            return res.status(401);
 
         req.login(user, async (err) => {
             if (err) {
