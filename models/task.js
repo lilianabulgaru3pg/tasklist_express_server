@@ -7,11 +7,11 @@ var taskSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    title: String,
-    items: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Item'
-    }]
+    title: String
+    // items: [{
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'Item'
+    // }]
 });
 
 module.exports = mongoose.model('Task', taskSchema);

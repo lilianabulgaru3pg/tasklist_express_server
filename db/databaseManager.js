@@ -1,4 +1,5 @@
 var Task = require('../models/task');
+var Items = require('../models/item');
 
 async function fetchTasks(userID) {
     try {
@@ -7,7 +8,7 @@ async function fetchTasks(userID) {
         }, (err, tasks) => tasks);
 
         var newUsersTask = userTasks.map((val) => ({
-            items: val._id,
+            _id: val._id,
             title: val.title
         }));
 
@@ -16,4 +17,20 @@ async function fetchTasks(userID) {
     }
     return newUsersTask;
 };
+
 module.exports.fetchUserTasks = fetchTasks;
+
+async function fetchItemsForTaskID(taskID) {
+    try {
+        var userItemsTasks = await Items.find({
+            task_id: taskID
+        }, (err, item) => item);
+
+        console.log('userItemsTasks', userItemsTasks);
+    } catch (err) {
+        console.log(err);
+    }
+    return userItemsTasks;
+}
+
+module.exports.fetchItemsForTaskID = fetchItemsForTaskID;

@@ -39,16 +39,17 @@ app.use(express.static('../TodoListApp/dist/'));
 
 app.post('/user-tasks', upload.none(), userRouter);
 app.get('/user-tasks', isLoggedIn, userRouter);
+app.get('/user-tasks/:trackId', userRouter);
+app.get('/user-tasks/:trackId/items', userRouter);
 
 function isLoggedIn(req, res, next) {
     console.log('isLoggedIn', req.isAuthenticated());
     if (req.isAuthenticated()) {
-        return res.redirect('/user-tasks');
+        next();
+        //res.redirect('/user-tasks/:trackId');
     }
     res.redirect('/');
 }
-
-
 app.listen(PORT, () => {
     console.log('Listening on localhost:3000')
 });

@@ -2,8 +2,6 @@ var User = require('../models/user');
 var passport = require('../utils/passport');
 var dbManager = require('../db/databaseManager');
 
-const getUserTasks = (id) => dbManager.fetchUserTasks(id);
-
 exports.user_tasks = ((req, res, next) => {
     console.log('inside user_tasks request');
     passport.authenticate('local-login', (err, user, info) => {
@@ -21,7 +19,7 @@ exports.user_tasks = ((req, res, next) => {
             if (err) {
                 return next(err);
             }
-
+            const getUserTasks = (id) => dbManager.fetchUserTasks(id);
             const body = await getUserTasks(user._id);
             res.status(200);
             console.log(body);
@@ -30,7 +28,20 @@ exports.user_tasks = ((req, res, next) => {
     })(req, res, next);
 });
 
-exports.user_authrequired = ((req, res) => {
-    console.log('Inside GET /authrequired callback');
-    res.status(200);
+exports.user_authrequired = ((req, res, next) => {
+    console.log('Inside GET /user-tasks callback');
+    return
+});
+
+exports.user_taskId = ((req, res, next) => {
+    console.log('Inside GET /:taskId callback');
+    return res.redirect('/items');
+});
+
+exports.get_items = (async (req, res, next) => {
+    console.log('Inside GET items', req.params.taskId);
+    const getItemsforTask = ((taskId) => dbManager.fetchItemsForTaskID(taskId));
+    var taskId = req.params.taskId;
+    const body = await getItemsforTask(taskId);
+    return res.json(body);
 });

@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var itemSchema = Schema({
     _id: Schema.Types.ObjectId,
+    task_id: Schema.Types.ObjectId,
     title: String,
     completed: Boolean
 });
