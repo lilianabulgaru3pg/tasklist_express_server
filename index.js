@@ -41,6 +41,7 @@ app.post('/user-tasks', upload.none(), userRouter);
 app.get('/user-tasks', isLoggedIn, userRouter);
 app.get('/user-tasks/:trackId', userRouter);
 app.get('/user-tasks/:trackId/items', userRouter);
+app.post('/user-tasks/add-task', userRouter);
 
 function isLoggedIn(req, res, next) {
     console.log('isLoggedIn', req.isAuthenticated());
