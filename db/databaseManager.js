@@ -59,7 +59,7 @@ async function createItem(taskid, data) {
         let dbTask = await Task.findOne({ _id: taskid }, (err, document) => {
             console.log('findById', err, document);
         })
-        console.log('foud id', dbTask._id);
+
         let newItem = new Item({
             _id: new mongoose.Types.ObjectId(),
             title: data,
@@ -76,4 +76,18 @@ async function createItem(taskid, data) {
 }
 
 module.exports.createItem = createItem;
+
+async function updateItem(itemId, completed) {
+    try {
+        let dbItem = await Item.findByIdAndUpdate(itemId, {
+            completed: completed
+        });
+
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
+    return true
+}
+module.exports.updateItem = updateItem;
 

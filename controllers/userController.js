@@ -57,3 +57,9 @@ exports.create_item = (async (req, res, next) => {
     let body = await saveItem(req.params.taskId, req.body.text);
     return body ? res.status(201).json(body) : res.status(409)
 });
+
+exports.update_item = (async (req, res, next) => {
+    let modifyItem = ((itemId, completed) => dbManager.updateItem(itemId, completed));
+    let status = await modifyItem(req.params.itemId, req.body.completed);
+    return status ? res.status(200) : res.status(409);
+});
