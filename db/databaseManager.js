@@ -1,5 +1,5 @@
 var Task = require('../models/task');
-var Items = require('../models/item');
+var Item = require('../models/item');
 var mongoose = require('mongoose');
 
 async function fetchTasks(userID) {
@@ -23,7 +23,7 @@ module.exports.fetchUserTasks = fetchTasks;
 
 async function fetchItemsForTaskID(taskID) {
     try {
-        var userItemsTasks = await Items.find({
+        var userItemsTasks = await Item.find({
             task_id: taskID
         }, (err, item) => item);
 
@@ -53,3 +53,27 @@ async function createTask(user_id, data) {
 }
 
 module.exports.createTask = createTask;
+
+async function createItem(taskid, data) {
+    try {
+        let dbTask = await Task.findOne({ _id: taskid }, (err, document) => {
+            console.log('findById', err, document);
+        })
+        console.log('foud id', dbTask._id);
+        let newItem = new Item({
+            _id: new mongoose.Types.ObjectId(),
+            title: data,
+            task_id: dbTask._id,
+            completed: false
+        });
+        var savedItem = await newItem.save();
+
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
+    return savedItem;
+}
+
+module.exports.createItem = createItem;
+

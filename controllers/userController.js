@@ -51,3 +51,9 @@ exports.create_task = (async (req, res, next) => {
     let body = await saveTask(req.user._id, req.body.title);
     return body ? res.status(201).json(body) : res.status(409)
 });
+
+exports.create_item = (async (req, res, next) => {
+    let saveItem = ((id, text) => dbManager.createItem(id, text));
+    let body = await saveItem(req.params.taskId, req.body.text);
+    return body ? res.status(201).json(body) : res.status(409)
+});

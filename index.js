@@ -39,15 +39,16 @@ app.use(express.static('../TodoListApp/dist/'));
 
 app.post('/user-tasks', upload.none(), userRouter);
 app.get('/user-tasks', isLoggedIn, userRouter);
-app.get('/user-tasks/:trackId', userRouter);
-app.get('/user-tasks/:trackId/items', userRouter);
+app.get('/user-tasks/:taskId', userRouter);
+app.get('/user-tasks/:taskId/items', userRouter);
 app.post('/user-tasks/add-task', userRouter);
+app.post('/user-tasks/:taskId/add-item', userRouter);
 
 function isLoggedIn(req, res, next) {
     console.log('isLoggedIn', req.isAuthenticated());
     if (req.isAuthenticated()) {
         next();
-        //res.redirect('/user-tasks/:trackId');
+        //res.redirect('/user-tasks/:taskId');
     }
     res.redirect('/');
 }
