@@ -11,5 +11,6 @@ router.get('/user-tasks/:taskId', user_controller.user_taskId);
 router.get('/user-tasks/:taskId/items', user_controller.get_items);
 router.post('/user-tasks/:taskId/add-item', user_controller.create_item);
 router.put('/user-tasks/:itemId/update', user_controller.update_item);
+router.get('/logout', user_controller.user_logout);
 
 module.exports = router;

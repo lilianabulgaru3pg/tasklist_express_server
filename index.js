@@ -44,6 +44,7 @@ app.get('/user-tasks/:taskId/items', userRouter);
 app.post('/user-tasks/add-task', userRouter);
 app.post('/user-tasks/:taskId/add-item', userRouter);
 app.put('/user-tasks/:itemId/update', userRouter);
+app.get('/logout', userRouter);
 
 function isLoggedIn(req, res, next) {
     console.log('isLoggedIn', req.isAuthenticated());
