@@ -29,7 +29,7 @@ exports.user_tasks = ((req, res, next) => {
 });
 
 exports.user_authrequired = ((req, res, next) => {
-    console.log('Inside GET /user-tasks callback');
+    console.log('Inside GET /tasks callback');
     return
 });
 
@@ -54,20 +54,26 @@ exports.create_task = (async (req, res, next) => {
 
 exports.create_item = (async (req, res, next) => {
     let saveItem = ((id, text) => dbManager.createItem(id, text));
-    let body = await saveItem(req.params.taskId, req.body.text);
-    console.log('item created', body);
-    return body ? res.status(201).json(body) : res.status(409)
+    let createdItem = await saveItem(req.params.taskId, req.body.text);
+    console.log('item created', createdItem);
+    return createdItem ? res.status(201).json(createdItem) : res.status(409)
 });
 
 exports.update_item = (async (req, res, next) => {
     let modifyItem = ((itemId, completed) => dbManager.updateItem(itemId, completed));
-    let status = await modifyItem(req.params.itemId, req.body.completed);
-    return status ? res.status(200) : res.status(409);
+    let updatedItem = await modifyItem(req.params.itemId, req.body.completed);
+    console.log('update item', updatedItem);
+    return updatedItem ? res.status(204).json(updatedItem) : res.status(409);
 });
 
 exports.user_logout = ((req, res) => {
     req.logout();
     console.log('logged in user', req.user);
-    res.status(200).json({ status: 'logged out' });
+    return res.status(200).json({ status: 'logged out' });
     // res.redirect('/');
+});
+
+exports.item_search = ((req, res) => {
+    console.log('item_search ', req.query.content)
+    return res.json({ status: 'success' })
 });

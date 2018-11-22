@@ -54,9 +54,9 @@ async function createTask(user_id, data) {
 
 module.exports.createTask = createTask;
 
-async function createItem(taskid, data) {
+async function createItem(taskId, data) {
     try {
-        let dbTask = await Task.findOne({ _id: taskid }, (err, document) => {
+        let dbTask = await Task.findOne({ _id: taskId }, (err, document) => {
             console.log('findById', err, document);
         })
 
@@ -79,7 +79,7 @@ module.exports.createItem = createItem;
 
 async function updateItem(itemId, completed) {
     try {
-        let dbItem = await Item.findByIdAndUpdate(itemId, {
+        var dbItem = await Item.findByIdAndUpdate(itemId, {
             completed: completed
         });
 
@@ -87,7 +87,7 @@ async function updateItem(itemId, completed) {
         console.log(err);
         return false;
     }
-    return true
+    return dbItem;
 }
 module.exports.updateItem = updateItem;
 
