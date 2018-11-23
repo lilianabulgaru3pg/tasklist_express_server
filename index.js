@@ -53,7 +53,6 @@ function isLoggedIn(req, res, next) {
     console.log('isLoggedIn', req.isAuthenticated());
     if (req.isAuthenticated()) {
         next();
-        //res.redirect('/tasks/:taskId');
     }
     res.redirect('/');
 }

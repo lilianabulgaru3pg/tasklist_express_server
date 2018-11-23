@@ -91,3 +91,24 @@ async function updateItem(itemId, completed) {
 }
 module.exports.updateItem = updateItem;
 
+
+async function searchForItems(query) {
+    try {
+        console.log(query.taskId, query.content)
+        var dbItems = await Item.find({ task_id: query.taskId, title: new RegExp(query.content, 'i') }
+            //  [{ $match: { task_id: query.taskId, title: new RegExp(query.content, 'i') } },
+            //  { $group: { _id: '$task_id' } }]
+            , (err, items) => {
+                err ? Error.throw(err) : false;
+                console.log('inside agrregate: items that match query', items);
+                return items.length > 0 ? items : false;
+            });
+        console.log('dbItems', dbItems);
+    } catch (err) {
+        console.log(err);
+    }
+    return dbItems;
+}
+
+module.exports.searchForItems = searchForItems;
+

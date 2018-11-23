@@ -30,7 +30,7 @@ exports.user_tasks = ((req, res, next) => {
 
 exports.user_authrequired = ((req, res, next) => {
     console.log('Inside GET /tasks callback');
-    return
+    return res.status(200);
 });
 
 exports.user_taskId = ((req, res, next) => {
@@ -43,7 +43,7 @@ exports.get_items = (async (req, res, next) => {
     const getItemsforTask = ((taskId) => dbManager.fetchItemsForTaskID(taskId));
     var taskId = req.params.taskId;
     const body = await getItemsforTask(taskId);
-    return res.json(body);
+    return res.status(200).json(body);
 });
 
 exports.create_task = (async (req, res, next) => {
@@ -73,7 +73,9 @@ exports.user_logout = ((req, res) => {
     // res.redirect('/');
 });
 
-exports.item_search = ((req, res) => {
+exports.item_search = (async (req, res) => {
     console.log('item_search ', req.query.content)
-    return res.json({ status: 'success' })
+    var dbItems = await ((query) => dbManager.searchForItems(query))(req.query)
+    console.log('dbItems', dbItems);
+    return dbItems ? res.status(200).json(dbItems) : res.status(400);
 });
