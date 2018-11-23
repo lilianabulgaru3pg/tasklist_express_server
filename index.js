@@ -46,7 +46,7 @@ app.get('/tasks/:taskId', userRouter);
 app.get('/tasks/:taskId/items', userRouter);
 app.post('/tasks/add-task', userRouter);
 app.post('/tasks/:taskId/add-item', userRouter);
-app.put('/tasks/:itemId/update', userRouter);
+app.put('/tasks/:itemId/', userRouter);
 app.get('/tasks/search', userRouter);
 
 function isLoggedIn(req, res, next) {
