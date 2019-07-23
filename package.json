@@ -1,7 +1,7 @@
 {
-  "name": "express",
+  "name": "TodoListExpressServer",
   "version": "1.0.0",
-  "description": "",
+  "description": "To-do List with Express Server Example",
   "main": "index.js",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
@@ -30,11 +30,16 @@
   },
   "repository": {
     "type": "git",
-    "url": " "
+    "url": "git+https://github.com/lilianabulgaru3pg/TodoListExpressServer.git"
   },
   "keywords": [
-    "express"
+    "express", "mongodb",  "promise",
+    "async", "javascript", "webpack4", "es6"
   ],
-  "author": "Liliana Bulgaru",
-  "license": "ISC"
+  "homepage": "https://github.com/lilianabulgaru3pg/TodoListExpressServer#readme",
+  "author": "Bulgaru Liliana <lilianablg@gmail.com> (https://www.linkedin.com/in/lilianabulgaru/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lilianabulgaru3pg/TodoListExpressServer/issues"
+  }
 }
